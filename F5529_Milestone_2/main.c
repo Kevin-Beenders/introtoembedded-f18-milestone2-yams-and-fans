@@ -69,9 +69,14 @@ int main(void)
     ADC_Setup();
     while (1)
     {
-        ADC12CTL0 |= ADC12SC;                   // Start sampling/conversion
         __bis_SR_register(LPM0_bits + GIE);
     }
+}
+
+#pragma vector = TIMER0_A0_VECTOR
+__interrupt void Timer0_A0(void)
+{
+        
 }
 
 #pragma vector = ADC12_VECTOR
@@ -110,7 +115,8 @@ __interrupt void ADC12_ISR(void)
 #pragma vector=USCI_A1_VECTOR
 __interrupt void USCI_A1_ISR(void)
 {
-
+ ADC12CTL0 |= ADC12SC;                   // Start sampling/conversion
+}
 
     switch(__even_in_range(UCA1IV,4))
   {
